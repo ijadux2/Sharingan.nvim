@@ -50,7 +50,7 @@ function M.create_note()
 				"tags: " .. tag_str,
 				"---",
 				"",
-				"# " .. title,
+				"## " .. title,
 				"",
 			}
 

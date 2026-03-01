@@ -109,6 +109,7 @@ vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buff
 vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
 
 vim.keymap.set("n", "<leader>.", ":source %<CR>")
+vim.keymap.set("n", "<leader>l", ":set spell!<CR>", { desc = "Toggle Spell Check" })
 -- command_history
 vim.keymap.set("n", "<S-l>", ":Shell<CR>")
 vim.keymap.set("n", "<C-q>", ":wqa!<CR>")
@@ -118,6 +119,7 @@ vim.keymap.set("n", "\\", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 -- shell commands
 vim.keymap.set("n", "<s-b>", ":Shell ", { desc = "Shell Command" })
 vim.keymap.set("n", "<C-x>", ":cd ", { desc = "chnage dir" })
+vim.keymap.set("n", "<S-t>", ":Tangle<CR>")
 
 vim.keymap.set("n", "|", ":vsplit<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "-", ":vsplit<CR>", { noremap = true, silent = true })

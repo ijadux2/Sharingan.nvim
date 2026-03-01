@@ -1,8 +1,0 @@
-return {
-	{
-		"ijadux2/quick-shell.nvim",
-		config = function()
-			require("quick-shell").setup()
-		end,
-	},
-}

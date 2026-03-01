@@ -19,7 +19,11 @@ require("core.keymaps")
 -- Setup lazy.nvim with spec directory
 require("lazy").setup({
 	spec = {
-		{ import = "plugins" },
+		{ import = "plugins.ui" },
+		{ import = "plugins.lsp" },
+		{ import = "plugins.tools" },
+		{ import = "plugins.filetypes" },
+		{ import = "plugins.extras" },
 	},
 	defaults = { lazy = false, version = false },
 	checker = { enabled = false },

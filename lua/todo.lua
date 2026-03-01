@@ -3,7 +3,7 @@ local M = {}
 local win = nil
 
 local default_opts = {
-	target_file = "~/notes/Markdowns/example.md",
+	target_file = "~/ijadux2/todo.md",
 	border = "single",
 	width = 0.8,
 	height = 0.8,

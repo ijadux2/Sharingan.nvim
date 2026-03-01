@@ -59,7 +59,7 @@ vim.diagnostic.config({
 
 -- Spell checking disabled
 vim.opt.spell = false
-vim.opt.spelllang = {}
+vim.opt.spelllang = {} --"en_us"
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {
