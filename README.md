@@ -13,6 +13,7 @@
 ---
 
 ### Table of Contents
+
 - [Introduction](#introduction)
 - [Features](#features)
 - [Screenshots](#screenshots)
@@ -22,8 +23,8 @@
 - [Project Structure](#project-structure)
 - [License](#license)
 
-
 # Introduction
+
 <a href="https://neovim.io">
   <img src="https://raw.githubusercontent.com/ijadux2/sharingan.nvim/main/assets/screenshot_2026-03-02_04-57-09.png" align="right" />
 </a>
@@ -39,19 +40,19 @@ custom Lua modules for everyday tasks.
 
 Its design is guided by these principles:
 
-+ **Gotta go fast.** Startup and run-time performance are priorities. Sharingan
+- **Gotta go fast.** Startup and run-time performance are priorities. Sharingan
   uses LazyVim's efficient plugin loading and custom optimizations.
-+ **Close to metal.** There's less between you and vanilla Neovim by design.
+- **Close to metal.** There's less between you and vanilla Neovim by design.
   That's less to grok and less to work around when you tinker.
-+ **Opinionated, but not stubborn.** Sharingan is about reasonable defaults and
+- **Opinionated, but not stubborn.** Sharingan is about reasonable defaults and
   curated configurations, but use as little or as much of it as you like.
-+ **Your system, your rules.** You know better! It won't automatically install
+- **Your system, your rules.** You know better! It won't automatically install
   system dependencies. Rely on this README to know what's needed.
-+ **Modular by design.** Each feature is a separate Lua module, making it easy
+- **Modular by design.** Each feature is a separate Lua module, making it easy
   to understand, modify, or remove components.
 
-
 # Features
+
 - Minimalistic good looks inspired by modern editors, using Catppuccin.
 - Built on LazyVim's solid foundation with automatic plugin management.
 - A powerful picker system powered by Snacks.picker for files, buffers, git
@@ -67,23 +68,8 @@ Its design is guided by these principles:
 - Todo management and markdown note creation.
 - Application launcher for Linux.
 
-
-# Screenshots
-
-| Fuzzy Finder | App Launcher |
-|--------------|--------------|
-| ![Fuzzy Finder](./assets/screenshot_2026-03-02_04-57-09.png) | ![App Launcher](./assets/screenshot_2026-03-02_04-57-41.png) |
-
-| Emoji Picker | Git Integration |
-|--------------|-----------------|
-| ![Emoji Picker](./assets/screenshot_2026-03-02_04-58-37.png) | ![Git Integration](./assets/screenshot_2026-03-02_04-59-10.png) |
-
-| Power Commands | Web Search |
-|----------------|------------|
-| ![Power Commands](./assets/screenshot_2026-03-02_04-59-25.png) | ![Web Search](./assets/screenshot_2026-03-02_05-00-14.png) |
-
-
 # Prerequisites
+
 - **Required:**
   - Neovim >= 0.10.0 (0.10+ recommended)
   - Git
@@ -97,8 +83,8 @@ Its design is guided by these principles:
   - `nmcli` - WiFi control
   - `rfkill` - Bluetooth control
 
-
 # Install
+
 ```sh
 # Backup existing Neovim config
 mv ~/.config/nvim ~/.config/nvim.bak
@@ -114,10 +100,9 @@ Lazy.nvim will automatically install all plugins on first launch.
 
 Useful commands:
 
-+ `LazySync` to synchronize your plugins with LazyVim.
-+ `Lazy` to open the LazyVim plugin manager UI.
-+ `:Tangle` to regenerate source files from markdown documentation.
-
+- `LazySync` to synchronize your plugins with LazyVim.
+- `Lazy` to open the LazyVim plugin manager UI.
+- `:Tangle` to regenerate source files from markdown documentation.
 
 # Keybindings
 
@@ -173,7 +158,6 @@ Useful commands:
 | `<C-k>` | Navigate up    |
 | `<C-l>` | Navigate right |
 
-
 # Project Structure
 
 ```
@@ -207,7 +191,6 @@ Useful commands:
 This configuration uses its own `tangle.lua` module to extract code blocks from
 `neovim.md` into the actual Lua files. Run `:Tangle` in Neovim to regenerate
 the source files from the markdown documentation.
-
 
 # License
 
