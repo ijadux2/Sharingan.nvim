@@ -16,11 +16,9 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [Screenshots](#screenshots)
 - [Prerequisites](#prerequisites)
 - [Install](#install)
 - [Keybindings](#keybindings)
-- [Project Structure](#project-structure)
 - [License](#license)
 
 # Introduction
@@ -29,6 +27,7 @@
   <img src="https://raw.githubusercontent.com/ijadux2/sharingan.nvim/main/assets/screenshot_2026-03-02_04-57-09.png" align="right" />
 </a>
 
+> [!info] intro
 > A highly customized Neovim configuration built on LazyVim, featuring a powerful
 > picker system powered by Snacks.picker and numerous native Lua modules for
 > enhanced productivity.
@@ -67,6 +66,7 @@ Its design is guided by these principles:
 - Emoji picker with category filtering.
 - Todo management and markdown note creation.
 - Application launcher for Linux.
+- integration with [Neoshell](https://github.com/ijadux2/Neoshell)
 
 # Prerequisites
 
@@ -82,6 +82,9 @@ Its design is guided by these principles:
   - `xdg-open` - Open URLs
   - `nmcli` - WiFi control
   - `rfkill` - Bluetooth control
+
+> [!info] Neoshell
+> See the requirements for neoshell
 
 # Install
 
