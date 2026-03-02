@@ -7,6 +7,11 @@ A highly customized Neovim configuration built on LazyVim, featuring a powerful 
 > but for more diverse native plugins use the
 > **plugin** branch for more options and customizations
 
+> [!important] git-branch !!
+> **main** for stable and less features(basic)
+> but for
+> **plugin** more versatile and more features
+
 ## Features
 
 ### Screenshots
