@@ -136,10 +136,54 @@ return {
 	},
 
 	--------------------------------------------------------------------------------
-	-- SECTION 6: Popup Terminal
+	-- SECTION 6: Popup Terminal & Neoshell
 	-- Floating terminal window (centered)
 	-- Usage: :Shell <command>
+	-- Neoshell: Custom Lua shell (:Neoshell to launch)
 	--------------------------------------------------------------------------------
+	{
+		"neoshell",
+		dir = "~/codespace/shell-in-lua",
+		lazy = true,
+		cmd = { "Neoshell" },
+		keys = {
+			{ "<leader>ts", ":Neoshell<CR>", desc = "Toggle Neoshell" },
+		},
+		config = function()
+			vim.api.nvim_create_user_command("Neoshell", function()
+				local buf = vim.api.nvim_create_buf(false, true)
+				local width = math.ceil(vim.o.columns * 0.9)
+				local height = math.ceil(vim.o.lines * 0.8)
+				local row = math.ceil((vim.o.lines - height) / 2 - 1)
+				local col = math.ceil((vim.o.columns - width) / 2)
+				local win = vim.api.nvim_open_win(buf, true, {
+					relative = "editor",
+					width = width,
+					height = height,
+					row = row,
+					col = col,
+					style = "minimal",
+					border = "rounded",
+					title = " Neoshell ",
+					title_pos = "center",
+				})
+				vim.fn.termopen({ "lua", "/home/jadu/codespace/shell-in-lua/neoshell.lua" }, {
+					cwd = vim.fn.getcwd(),
+					on_exit = function()
+						vim.api.nvim_win_close(win, true)
+					end,
+				})
+				vim.cmd("startinsert")
+				vim.keymap.set("n", "q", function()
+					if vim.api.nvim_win_is_valid(win) then
+						vim.api.nvim_win_close(win, true)
+					end
+				end, { buffer = buf, silent = true })
+			end, {
+				desc = "Launch Neoshell in floating window",
+			})
+		end,
+	},
 	{
 		"none", -- Virtual plugin
 		virtual = true,
