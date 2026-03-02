@@ -2,6 +2,11 @@
 
 A highly customized Neovim configuration built on LazyVim, featuring a powerful picker system powered by Snacks.picker and numerous native Lua modules for enhanced productivity.
 
+> [!important] git branchs
+> **main** branch is for stable neovim config
+> but for more diverse native plugins use the
+> **plugin** branch for more options and customizations
+
 ## Features
 
 ### Screenshots
