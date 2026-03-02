@@ -27,7 +27,7 @@
   <img src="https://raw.githubusercontent.com/ijadux2/sharingan.nvim/main/assets/screenshot_2026-03-02_04-57-09.png" align="right" />
 </a>
 
-> [!info] intro
+> [!info]
 > A highly customized Neovim configuration built on LazyVim, featuring a powerful
 > picker system powered by Snacks.picker and numerous native Lua modules for
 > enhanced productivity.
@@ -83,7 +83,7 @@ Its design is guided by these principles:
   - `nmcli` - WiFi control
   - `rfkill` - Bluetooth control
 
-> [!info] Neoshell
+> [!info]
 > See the requirements for neoshell
 
 # Install
