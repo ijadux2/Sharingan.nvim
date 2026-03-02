@@ -22,7 +22,7 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = {
-			"nvim-treesitter/nvim-treesitter",  -- Syntax highlighting
+			"nvim-treesitter/nvim-treesitter", -- Syntax highlighting
 			"nvim-mini/mini.nvim",
 			"nvim-mini/mini.icons",
 		},
@@ -39,7 +39,7 @@ return {
 		"epwalsh/obsidian.nvim",
 		version = "*",
 		lazy = true,
-		ft = "markdown",  -- Only load for markdown files
+		ft = "markdown", -- Only load for markdown files
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
@@ -64,7 +64,7 @@ return {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 		},
-		ft = { "nu" },  -- Only for .nu files
+		ft = { "nu" }, -- Only for .nu files
 		config = function()
 			require("nu").setup({
 				use_lsp_features = false,
@@ -81,9 +81,9 @@ return {
 	--------------------------------------------------------------------------------
 	{
 		"3rd/image.nvim",
-		build = false,  -- Don't build, use pre-built
+		build = false, -- Don't build, use pre-built
 		opts = {
-			processor = "magick_cli",  -- Use ImageMagick CLI
+			processor = "magick_cli", -- Use ImageMagick CLI
 		},
 	},
 
@@ -94,7 +94,7 @@ return {
 	-- Usage: :Shell <command>
 	--------------------------------------------------------------------------------
 	{
-		"none",  -- Virtual plugin (no actual plugin)
+		"none", -- Virtual plugin (no actual plugin)
 		virtual = true,
 		config = function()
 			vim.api.nvim_create_user_command("Shell", function(opts)
@@ -141,7 +141,7 @@ return {
 	-- Usage: :Shell <command>
 	--------------------------------------------------------------------------------
 	{
-		"none",  -- Virtual plugin
+		"none", -- Virtual plugin
 		virtual = true,
 		config = function()
 			vim.api.nvim_create_user_command("Shell", function(opts)
