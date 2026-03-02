@@ -89,39 +89,55 @@ local function get_log(callback)
 	end)
 end
 
-local function get_status(callback)
-	vim.system({ "git", "status", "--porcelain" }, { text = true }, function(obj)
+local function push_to_remote(remote, branch, callback)
+	vim.system({ "git", "push", remote, branch }, { text = true }, function(obj)
 		vim.schedule(function()
-			callback(obj.stdout)
+			if obj.code == 0 then
+				callback(true, "Pushed to " .. remote .. "/" .. branch)
+			else
+				callback(false, "Push failed: " .. obj.stderr)
+			end
 		end)
 	end)
 end
 
-local function commit_to_branch(branch, message, callback)
-	vim.system({ "git", "checkout", branch }, { text = true }, function(checkout_obj)
-		if checkout_obj.code ~= 0 then
-			vim.schedule(function()
-				callback(false, "Failed to checkout: " .. checkout_obj.stderr)
-			end)
-			return
-		end
-
-		vim.system({ "git", "add", "-A" }, { text = true }, function(add_obj)
-			if add_obj.code ~= 0 then
-				vim.schedule(function()
-					callback(false, "Failed to stage: " .. add_obj.stderr)
-				end)
+local function get_remotes(callback)
+	vim.system({ "git", "remote", "-v" }, { text = true }, function(obj)
+		vim.schedule(function()
+			if obj.code ~= 0 then
+				callback(nil, obj.stderr)
 				return
 			end
 
-			vim.system({ "git", "commit", "-m", message }, { text = true }, function(commit_obj)
-				vim.schedule(function()
-					if commit_obj.code == 0 then
-						callback(true, "Committed to: " .. branch)
-					else
-						callback(false, "Failed to commit: " .. commit_obj.stderr)
-					end
-				end)
+			local remotes = {}
+			for _, line in ipairs(vim.split(obj.stdout, "\n")) do
+				local name = line:match("^([^%s]+)")
+				if name and not remotes[name] then
+					remotes[name] = true
+				end
+			end
+
+			local remote_list = vim.tbl_keys(remotes)
+			table.sort(remote_list)
+			callback(remote_list, nil)
+		end)
+	end)
+end
+
+local function commit_and_push(branch, message, callback)
+	commit_to_branch(branch, message, function(success, output)
+		if not success then
+			callback(false, output)
+			return
+		end
+
+		get_current_branch(function(current_branch)
+			push_to_remote("origin", current_branch, function(push_success, push_output)
+				if push_success then
+					callback(true, output .. "\n" .. push_output)
+				else
+					callback(false, output .. "\n" .. push_output)
+				end
 			end)
 		end)
 	end)
@@ -198,6 +214,16 @@ function M.pick()
 					icon = "󰜧",
 					action = "commit",
 				},
+				{
+					text = "Push to Remote",
+					icon = "󰊤",
+					action = "push",
+				},
+				{
+					text = "Commit & Push",
+					icon = "󰜏",
+					action = "commit_push",
+				},
 			}
 
 			require("snacks").picker({
@@ -225,6 +251,12 @@ function M.pick()
 					elseif item.action == "commit" then
 						self:close()
 						M.commit()
+					elseif item.action == "push" then
+						self:close()
+						M.push()
+					elseif item.action == "commit_push" then
+						self:close()
+						M.commit_push()
 					end
 				end,
 			})
@@ -343,6 +375,127 @@ end
 
 function M.log()
 	show_log()
+end
+
+function M.push()
+	get_current_branch(function(branch)
+		if not branch or branch == "" then
+			vim.notify("Not on a branch", vim.log.levels.ERROR)
+			return
+		end
+
+		get_status(function(status)
+			local has_unpushed = false
+			if status == "" then
+				has_unpushed = false
+			else
+				vim.system({ "git", "log", "@{u}..HEAD", "--oneline" }, { text = true }, function(obj)
+					has_unpushed = obj.stdout and obj.stdout ~= ""
+				end)
+			end
+
+			get_remotes(function(remotes, err)
+				if err then
+					vim.notify("Error getting remotes: " .. err, vim.log.levels.ERROR)
+					return
+				end
+
+				if #remotes == 0 then
+					vim.notify("No remotes configured", vim.log.levels.ERROR)
+					return
+				end
+
+				local items = {}
+				for _, r in ipairs(remotes) do
+					table.insert(items, {
+						text = r .. "/" .. branch,
+						remote = r,
+						branch = branch,
+					})
+				end
+
+				require("snacks").picker({
+					title = "Push to Remote (branch: " .. branch .. ")",
+					items = items,
+					format = function(item, _)
+						return {
+							{ "󰊤", "SnacksPickerIcon" },
+							{ " " },
+							{ item.text, "SnacksPickerTitle" },
+						}
+					end,
+					layout = { preset = "default" },
+					confirm = function(self, item)
+						if item then
+							self:close()
+							push_to_remote(item.remote, item.branch, function(success, output)
+								if success then
+									vim.notify(output, vim.log.levels.INFO)
+								else
+									vim.notify(output, vim.log.levels.ERROR)
+								end
+							end)
+						end
+					end,
+				})
+			end)
+		end)
+	end)
+end
+
+function M.commit_push()
+	get_branches(false, function(branches)
+		if type(branches) == "string" then
+			vim.notify(branches, vim.log.levels.ERROR)
+			return
+		end
+
+		get_status(function(status)
+			if status == "" then
+				vim.notify("No changes to commit", vim.log.levels.WARN)
+				return
+			end
+
+			local items = {}
+			for _, b in ipairs(branches) do
+				table.insert(items, {
+					text = b.name,
+					branch = b,
+				})
+			end
+
+			require("snacks").picker({
+				title = "Commit & Push Branch",
+				items = items,
+				format = function(item, _)
+					return {
+						{ "󰜏", "SnacksPickerIcon" },
+						{ " " },
+						{ item.text, "SnacksPickerTitle" },
+					}
+				end,
+				layout = { preset = "default" },
+				confirm = function(self, item)
+					if item and item.branch then
+						self:close()
+						vim.ui.input({ prompt = "Commit message: " }, function(msg)
+							if not msg or msg == "" then
+								return
+							end
+							commit_and_push(item.branch.name, msg, function(success, output)
+								if success then
+									vim.notify(output, vim.log.levels.INFO)
+									show_log()
+								else
+									vim.notify(output, vim.log.levels.ERROR)
+								end
+							end)
+						end)
+					end
+				end,
+			})
+		end)
+	end)
 end
 
 return M

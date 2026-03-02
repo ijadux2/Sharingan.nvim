@@ -1,6 +1,8 @@
 # Sharingan.nvim
 
-A highly customized Neovim configuration built on LazyVim, featuring a powerful picker system powered by Snacks.picker and numerous native Lua modules for enhanced productivity.
+A highly customized Neovim configuration built on LazyVim, featuring a powerful
+picker system powered by Snacks.picker and numerous native Lua modules for
+enhanced productivity.
 
 ## Features
 
